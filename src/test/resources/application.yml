@@ -5,9 +5,9 @@ app:
 spring:
   ai:
     dashscope:
-      api-key: sk-b42a1c78946d4eb397ca5e89d7382009
+      api-key: sk
       chat:
-        api-key: sk-b42a1c78946d4eb397ca5e89d7382009
+        api-key: sk
 
     model:
       chat: dashscope
