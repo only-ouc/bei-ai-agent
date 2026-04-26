@@ -1,0 +1,25 @@
+app:
+  rag:
+    local-vector-store:
+      enabled: false
+spring:
+  ai:
+    dashscope:
+      api-key: sk-b42a1c78946d4eb397ca5e89d7382009
+      chat:
+        api-key: sk-b42a1c78946d4eb397ca5e89d7382009
+
+    model:
+      chat: dashscope
+      embedding: dashscope
+      audio:
+        speech: none
+        transcription: none
+      image: none
+      video: none
+      rerank: none
+
+  autoconfigure:
+    exclude:
+      - com.alibaba.cloud.ai.autoconfigure.dashscope.DashScopeAudioSpeechAutoConfiguration
+      - com.alibaba.cloud.ai.autoconfigure.dashscope.DashScopeAudioTranscriptionAutoConfiguration
