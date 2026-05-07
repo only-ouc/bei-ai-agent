@@ -8,6 +8,21 @@ server:
   servlet:
     context-path: /api
 
+  datasource:
+    url: jdbc:postgresql://pgm-2zep706optg51kn8eo.rwlb.rds.aliyuncs.com:5432/bei_ai_agent
+    username: my_user
+    password: ouyang123!
+  ai:
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        dimensions: 1536
+        distance-type: COSINE_DISTANCE
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+
+
+
+
 # springdoc-openapi ???????
 springdoc:
   swagger-ui:
