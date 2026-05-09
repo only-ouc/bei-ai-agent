@@ -2,6 +2,7 @@ package com.beizhi.beiaiagent.app;
 
 import com.beizhi.beiaiagent.advisor.MyLoggerAdvisor;
 import com.beizhi.beiaiagent.chatmemory.FileBasedChatMemory;
+import com.beizhi.beiaiagent.rag.LoveAppRagCustomAdvisorFactory;
 import com.beizhi.beiaiagent.rag.QueryRewriter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,8 @@ import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.vectorstore.VectorStore;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +34,9 @@ public class LoveApp {
             "围绕刚毕业初入社会、工作10-20年、已经实现财富自由三种状态提问：初入社会询问是否适应职场生活；" +
             "工作10-20年状态询问沟通、习惯差异、经验成长等；财富自由状态询问其下一阶段人生目标，并给当代马上要步入职场的大学生一点建议" +
             "引导用户详述事情经过、对方反应及自身想法，以便给出专属解决方案。";
+    @Qualifier("loveAppVectorStore")
+    @Autowired
+    private VectorStore loveAppVectorStore;
 
     /**
      * 初始化AI 客户端
@@ -131,10 +137,15 @@ public class LoveApp {
                 .advisors(new MyLoggerAdvisor())
                 // 应用知识库问答
 //                .advisors(QuestionAnswerAdvisor.builder(travelVectorStore).build())
-//               应用 RAG 检索增强服务 (基于云知识库服务)
-                .advisors(loveAppRagCloudAdvisor)
-//               应用 RAG 检索增强服务 (基于PGVector 向量存储)
-                //.advisors(QuestionAnswerAdvisor.builder(pgVectorVectorStore).build())
+                // 应用 RAG 检索增强服务 (基于云知识库服务)
+//                .advisors(loveAppRagCloudAdvisor)
+                // 应用 RAG 检索增强服务 (基于PGVector 向量存储)
+//              .advisors(QuestionAnswerAdvisor.builder(pgVectorVectorStore).build())
+                .advisors(
+                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
+                                loveAppVectorStore, "已经实现财富自由"
+                        )
+                )
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
