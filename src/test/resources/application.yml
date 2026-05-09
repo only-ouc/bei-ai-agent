@@ -5,9 +5,10 @@ app:
 spring:
   ai:
     dashscope:
-      api-key: sk-b42a1c78946d4eb397ca5e89d7382009
+      api-key: sk
       chat:
-        api-key: sk-b42a1c78946d4eb397ca5e89d7382009
+        api-key: sk
+
     model:
       chat: dashscope
       embedding: dashscope
@@ -17,15 +18,6 @@ spring:
       image: none
       video: none
       rerank: none
-
-  datasource:
-    url: jdbc:postgresql://pgm-2zep706optg51kn8eo.rwlb.rds.aliyuncs.com:5432/bei_ai_agent
-    username: my_user
-    password: ouyang123!
-    driver-class-name: org.postgresql.Driver
-
-
-
 
   autoconfigure:
     exclude:
