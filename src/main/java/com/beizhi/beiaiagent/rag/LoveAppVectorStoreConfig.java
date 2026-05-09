@@ -25,6 +25,9 @@ public class LoveAppVectorStoreConfig {
     @Resource
     private LoveAppDocumentLoader loveAppDocumentLoader;
 
+    @Resource
+    private MyKeywordEnricher myKeywordEnricher;
+
     public LoveAppVectorStoreConfig(LoveAppDocumentLoader loveAppDocumentLoader) {
         this.loveAppDocumentLoader = loveAppDocumentLoader;
     }
@@ -35,8 +38,11 @@ public class LoveAppVectorStoreConfig {
                 .build();
         //加载文档
         List<Document> documents = loveAppDocumentLoader.loadMarkdowns();
+
+        //自动填充关键词信息
+        List<Document> enricheDocuments = myKeywordEnricher.enrichDocuments(documents);
         //写入向量数据库
-        simpleVectorStore.add(documents);
+        simpleVectorStore.add(enricheDocuments);
         return simpleVectorStore;
     }
 }
