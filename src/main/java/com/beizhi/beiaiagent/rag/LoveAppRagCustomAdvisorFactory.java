@@ -27,6 +27,7 @@ public class LoveAppRagCustomAdvisorFactory {
                 .build();
         return RetrievalAugmentationAdvisor.builder()
                 .documentRetriever(documentRetriever)
+                .queryAugmenter(LoveAppContextualQueryAugmenterFactory.createInstance())
                 .build();
     }
 }

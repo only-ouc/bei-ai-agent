@@ -136,16 +136,17 @@ public class LoveApp {
                 // 开启日志，便于观察效果
                 .advisors(new MyLoggerAdvisor())
                 // 应用知识库问答
-//                .advisors(QuestionAnswerAdvisor.builder(travelVectorStore).build())
+                .advisors(QuestionAnswerAdvisor.builder(loveAppVectorStore).build())
                 // 应用 RAG 检索增强服务 (基于云知识库服务)
 //                .advisors(loveAppRagCloudAdvisor)
                 // 应用 RAG 检索增强服务 (基于PGVector 向量存储)
 //              .advisors(QuestionAnswerAdvisor.builder(pgVectorVectorStore).build())
-                .advisors(
-                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
-                                loveAppVectorStore, "已经实现财富自由"
-                        )
-                )
+                //应用自定义的 RAG 检索增强服务（文档查询器 + 上下文增强器）
+//                .advisors(
+//                        LoveAppRagCustomAdvisorFactory.createLoveAppRagCustomAdvisor(
+//                                loveAppVectorStore, "财富自由"
+//                        )
+//                )
                 .call()
                 .chatResponse();
         String content = chatResponse.getResult().getOutput().getText();
